@@ -130,18 +130,17 @@ export function Projects() {
 
         {/* Upcoming projects */}
         <div className="mt-8 grid gap-8 md:grid-cols-2">
-          <div className="border border-dashed border-border/50 p-8">
-            <span className="mb-3 inline-block border border-primary/30 bg-primary/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-primary">
-              Proximamente
+          <div className="border border-border p-8">
+            <span className="mb-3 inline-block border border-green-500/30 bg-green-500/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-green-400">
+              Live
             </span>
             <h3 className="text-lg font-bold text-foreground">cfdi-cli</h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              CLI open source para parsear, validar y convertir facturas
-              electronicas del SAT (CFDI) a JSON, CSV y mas. Para contadores,
-              devs y negocios en Mexico.
+              CLI y web app open source para parsear, validar y convertir facturas
+              electronicas del SAT (CFDI 4.0) a JSON y CSV. Rust + WebAssembly.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
-              {["Rust", "SAT/CFDI", "Open Source"].map((tech) => (
+              {["Rust", "WASM", "SAT/CFDI", "Open Source"].map((tech) => (
                 <span
                   key={tech}
                   className="border border-border/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60"
@@ -149,6 +148,40 @@ export function Projects() {
                   {tech}
                 </span>
               ))}
+            </div>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <a
+                href="/cfdi"
+                className="group inline-flex items-center gap-2 bg-primary px-4 py-2 text-xs font-medium text-primary-foreground transition-all hover:opacity-90"
+              >
+                Usar web app
+                <svg
+                  className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+              <a
+                href="https://github.com/orbita-pos/cfdi-cli"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border border-border px-4 py-2 text-xs font-medium text-foreground transition-all hover:border-primary hover:text-primary"
+              >
+                GitHub
+                <svg
+                  className="h-3 w-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                </svg>
+              </a>
             </div>
           </div>
           <div className="flex items-center justify-center border border-dashed border-border/50 p-12">
