@@ -154,7 +154,18 @@ export function Projects() {
                   </span>
                 ))}
               </div>
-              <div className="mt-5">
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <a
+                  href="https://jesusbr98-shadow.hf.space"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 bg-primary px-4 py-2 text-xs font-medium text-primary-foreground transition-all hover:opacity-90"
+                >
+                  Abrir app
+                  <svg className="h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
                 <a
                   href="https://github.com/jesusbr/shadow"
                   target="_blank"
