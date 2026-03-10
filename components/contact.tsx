@@ -6,17 +6,17 @@ const links = [
   {
     label: "Orbita POS",
     href: "https://orbitapos.com",
-    description: "El producto en produccion",
+    description: "Production product",
   },
   {
     label: "GitHub",
     href: "https://github.com/orbita-pos",
-    description: "Codigo y contribuciones",
+    description: "Code and contributions",
   },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/jesus-bernal-2b1a1b228",
-    description: "Perfil profesional",
+    description: "Professional profile",
   },
   {
     label: "X / Twitter",
@@ -24,16 +24,16 @@ const links = [
     description: "Build in public updates",
   },
   {
-    label: "info@orbitapos.com",
-    href: "mailto:info@orbitapos.com",
-    description: "Para negocios, hiring, o colaboracion",
+    label: "info@jesusbr.com",
+    href: "mailto:info@jesusbr.com",
+    description: "Hiring, collaboration, or freelance",
   },
 ];
 
 export function Contact() {
   return (
     <section
-      id="contacto"
+      id="contact"
       className="relative overflow-hidden border-t border-border py-32"
     >
       <SignalRippleBackground />
@@ -44,16 +44,15 @@ export function Contact() {
             <div className="mb-4 flex items-center gap-3">
               <div className="h-px w-8 bg-primary" />
               <span className="font-mono text-xs uppercase tracking-widest text-primary">
-                Contacto
+                Contact
               </span>
             </div>
             <h2 className="text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-              Hablemos
+              Let's talk
             </h2>
             <p className="mt-4 text-pretty text-lg leading-relaxed text-muted-foreground">
-              Si tienes un negocio fisico en Mexico, si estas contratando,
-              o si simplemente quieres hablar sobre producto y tecnologia
-              — escribeme.
+              If you're hiring, want to collaborate on a project,
+              or just want to talk about technology — reach out.
             </p>
           </div>
 

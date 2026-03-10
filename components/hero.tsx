@@ -27,8 +27,9 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="mt-6 text-pretty text-lg leading-relaxed text-muted-foreground md:text-xl"
           >
-            Solo founder. Construyo software para negocios fisicos en Mexico.
-            Ahora mismo estoy haciendo{" "}
+            Software engineer. I build with Rust, Go, and TypeScript
+            — from cryptography and search engines to full-stack apps.
+            My main product is{" "}
             <a
               href="/orbita"
               className="text-primary underline decoration-primary/30 underline-offset-4 transition-colors hover:decoration-primary"
@@ -44,11 +45,21 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.8 }}
             className="mt-8 flex flex-wrap items-center gap-6"
           >
+            <a
+              href="/Jesus_Bernal_CV.pdf"
+              download
+              className="inline-flex items-center gap-2 border border-primary bg-primary px-4 py-2 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:opacity-90"
+            >
+              Download CV
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 18h16" />
+              </svg>
+            </a>
             {[
               { label: "GitHub", href: "https://github.com/orbita-pos" },
               { label: "LinkedIn", href: "https://www.linkedin.com/in/jesus-bernal-2b1a1b228" },
               { label: "X / Twitter", href: "https://x.com/OrbitaPOS" },
-              { label: "info@orbitapos.com", href: "mailto:info@orbitapos.com" },
+              { label: "info@jesusbr.com", href: "mailto:info@jesusbr.com" },
             ].map((link) => (
               <a
                 key={link.label}

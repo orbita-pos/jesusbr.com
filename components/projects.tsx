@@ -1,23 +1,26 @@
 export function Projects() {
   return (
-    <section id="proyectos" className="relative border-t border-border py-32">
+    <section id="projects" className="relative border-t border-border py-32">
       <div className="relative mx-auto max-w-6xl px-6">
         {/* Section header */}
         <div className="mb-4 flex items-center gap-3">
           <div className="h-px w-8 bg-primary" />
           <span className="font-mono text-xs uppercase tracking-widest text-primary">
-            Proyectos
+            Projects
           </span>
         </div>
-        <h2 className="mb-16 text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-          Lo que estoy construyendo
+        <h2 className="mb-4 text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+          What I'm building
         </h2>
+        <p className="mb-16 text-sm text-muted-foreground/60">
+          Projects marked as hobby run on free-tier hosting (Hugging Face Spaces, Turso free tier) — they may take a few seconds to load.
+        </p>
 
         {/* ── Tier 1: Proyecto principal — Orbita POS ── */}
         <div className="relative border-2 border-primary/20 bg-gradient-to-b from-primary/[0.03] to-transparent">
           <div className="absolute -top-3 left-8 bg-background px-3 md:left-12">
             <span className="font-mono text-[10px] uppercase tracking-widest text-primary">
-              Proyecto principal
+              Main product
             </span>
           </div>
           <div className="p-8 pt-10 md:p-12 md:pt-12">
@@ -34,17 +37,17 @@ export function Projects() {
               </h3>
             </div>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-              Sistema de punto de venta para tienditas y PyMEs en Mexico.
-              Vision AI para reconocer productos con la camara, modo offline
-              real, facturacion electronica CFDI, kiosko de autoservicio,
-              app movil, y multi-sucursal. Todo construido por una sola persona.
+              Point-of-sale system for small businesses in Mexico.
+              AI vision for camera-based product recognition, real offline mode,
+              electronic invoicing (CFDI), self-service kiosk,
+              mobile app, and multi-location support. Built entirely solo.
             </p>
 
             {/* Key numbers */}
             <div className="mt-8 flex flex-wrap gap-8">
               {[
                 { value: "717+", label: "tests" },
-                { value: "6", label: "sub-productos" },
+                { value: "6", label: "sub-products" },
                 { value: "10", label: "beta testers" },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col">
@@ -64,7 +67,7 @@ export function Projects() {
                 href="/orbita"
                 className="group inline-flex items-center gap-2 bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-all hover:opacity-90"
               >
-                Ver mas
+                Learn more
                 <svg
                   className="h-4 w-4 transition-transform group-hover:translate-x-1"
                   fill="none"
@@ -134,15 +137,18 @@ export function Projects() {
             <div className="md:col-span-2 md:p-8">
               <div className="flex items-center gap-3">
                 <h3 className="text-lg font-bold text-foreground">Shadow</h3>
-                <span className="inline-block border border-green-500/30 bg-green-500/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-green-400">
-                  Live
+                <span className="inline-block border border-blue-500/30 bg-blue-500/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-blue-400">
+                  Open Source
+                </span>
+                <span className="inline-block border border-border/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/50">
+                  Hobby
                 </span>
               </div>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Comunicacion P2P encriptada end-to-end. Implementa X3DH + Double
-                Ratchet (protocolo Signal), mesh routing, mensajes efimeros, dead
-                drops, grupos con Sender Key, anti-forensics, y plausible deniability.
-                Auditado por seguridad. Zero servers, zero trust, zero trace.
+                End-to-end encrypted P2P communication. Implements X3DH + Double
+                Ratchet (Signal Protocol), mesh routing, ephemeral messages, dead
+                drops, group messaging with Sender Key, anti-forensics, and plausible deniability.
+                Security audited. Zero servers, zero trust, zero trace.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {["Rust", "WASM", "X3DH", "Double Ratchet", "WebRTC", "E2E"].map((tech) => (
@@ -156,25 +162,14 @@ export function Projects() {
               </div>
               <div className="mt-5 flex flex-wrap items-center gap-3">
                 <a
-                  href="https://jesusbr98-shadow.hf.space"
+                  href="https://github.com/jesusbr/shadow"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 bg-primary px-4 py-2 text-xs font-medium text-primary-foreground transition-all hover:opacity-90"
                 >
-                  Abrir app
+                  View Source
                   <svg className="h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </a>
-                <a
-                  href="https://github.com/jesusbr/shadow"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 border border-border px-4 py-2 text-xs font-medium text-foreground transition-all hover:border-primary hover:text-primary"
-                >
-                  GitHub
-                  <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
                   </svg>
                 </a>
               </div>
@@ -209,11 +204,14 @@ export function Projects() {
                 <span className="inline-block border border-green-500/30 bg-green-500/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-green-400">
                   Live
                 </span>
+                <span className="inline-block border border-border/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/50">
+                  Hobby
+                </span>
               </div>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Motor de busqueda construido desde cero. Crawler concurrente,
+                Search engine built from scratch. Concurrent crawler,
                 inverted index, BM25 + PageRank, spell correction, autocomplete.
-                Sin Elasticsearch, sin APIs externas — todo desde cero en Go.
+                No Elasticsearch, no external APIs — everything from scratch in Go.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {["Go", "SQLite", "BM25", "PageRank", "Crawler", "Full-text search"].map((tech) => (
@@ -230,7 +228,7 @@ export function Projects() {
                   href="/spider"
                   className="group inline-flex items-center gap-2 bg-primary px-4 py-2 text-xs font-medium text-primary-foreground transition-all hover:opacity-90"
                 >
-                  Buscar
+                  Search
                   <svg className="h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
@@ -242,7 +240,7 @@ export function Projects() {
               {[
                 { value: "2,000+", label: "pages indexed" },
                 { value: "43k", label: "terms" },
-                { value: "<50ms", label: "search latency" },
+                { value: "345k", label: "postings" },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col">
                   <span className="font-mono text-lg font-bold text-primary">
@@ -264,15 +262,18 @@ export function Projects() {
             <div className="flex-1 p-8 md:w-2/3">
               <div className="flex items-center gap-3">
                 <h3 className="text-xl font-bold text-foreground">Vertex</h3>
-                <span className="inline-block border border-yellow-500/30 bg-yellow-500/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-yellow-400">
-                  In Development
+                <span className="inline-block border border-blue-500/30 bg-blue-500/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-blue-400">
+                  Open Source
+                </span>
+                <span className="inline-block border border-border/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/50">
+                  Hobby
                 </span>
               </div>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Plataforma de videollamadas empresarial. SFU (Selective Forwarding
-                Unit) construido desde cero en Rust, simulcast con calidad adaptativa,
-                screen sharing, chat, waiting room, grabacion, y admin dashboard.
-                Competencia directa de Zoom y Teams.
+                Enterprise video conferencing platform. Custom SFU (Selective Forwarding
+                Unit) built from scratch in Rust, adaptive simulcast,
+                screen sharing, chat, waiting room, recording, and admin dashboard.
+                Direct competitor to Zoom and Teams.
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {["Rust", "WebRTC", "SFU", "Tokio", "Next.js", "Simulcast"].map((tech) => (
@@ -283,6 +284,19 @@ export function Projects() {
                     {tech}
                   </span>
                 ))}
+              </div>
+              <div className="mt-5">
+                <a
+                  href="https://github.com/jesusbr/vertex"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 bg-primary px-4 py-2 text-xs font-medium text-primary-foreground transition-all hover:opacity-90"
+                >
+                  View Source
+                  <svg className="h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
               </div>
             </div>
             {/* Right: stats */}
@@ -313,10 +327,13 @@ export function Projects() {
               <span className="inline-block border border-green-500/30 bg-green-500/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-green-400">
                 Live
               </span>
+              <span className="inline-block border border-border/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/50">
+                Hobby
+              </span>
             </div>
             <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
-              CLI y web app open source para parsear, validar y convertir
-              facturas electronicas del SAT (CFDI 4.0) a JSON y CSV.
+              Open source CLI and web app to parse, validate, and convert
+              Mexican electronic invoices (CFDI 4.0) to JSON and CSV.
             </p>
             <div className="mt-3 flex flex-wrap gap-1.5">
               {["Rust", "WASM", "SAT/CFDI", "Open Source"].map((tech) => (
@@ -333,7 +350,7 @@ export function Projects() {
                 href="/cfdi"
                 className="group inline-flex items-center gap-2 bg-primary px-3.5 py-1.5 text-xs font-medium text-primary-foreground transition-all hover:opacity-90"
               >
-                Usar web app
+                Try web app
                 <svg className="h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>

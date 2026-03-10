@@ -3,23 +3,25 @@
 import { ArchitectureGraphBackground } from "@/components/backgrounds/architecture-graph";
 
 const stack = [
-  { name: "Next.js", role: "Framework", detail: "App Router, RSC, middleware" },
-  { name: "TypeScript", role: "Lenguaje", detail: "End-to-end type safety" },
-  { name: "PostgreSQL", role: "Base de datos", detail: "Transacciones, migrations" },
-  { name: "Drizzle ORM", role: "ORM", detail: "Type-safe, zero overhead" },
-  { name: "Electron", role: "Desktop", detail: "Offline, hardware integration" },
+  { name: "Rust", role: "Systems", detail: "WASM, crypto, SFU, CLI tools" },
+  { name: "Go", role: "Backend", detail: "Crawlers, search engines" },
+  { name: "TypeScript", role: "Full-stack", detail: "Next.js, React, Node" },
+  { name: "Next.js", role: "Framework", detail: "App Router, RSC, API routes" },
+  { name: "PostgreSQL", role: "Database", detail: "Transactions, migrations" },
+  { name: "SQLite", role: "Embedded DB", detail: "Turso Cloud, local-first" },
+  { name: "Electron", role: "Desktop", detail: "Offline, hardware access" },
   { name: "Expo", role: "Mobile", detail: "React Native, offline queue" },
-  { name: "Tailwind", role: "Styling", detail: "Utility-first CSS" },
-  { name: "Vercel", role: "Deploy", detail: "Previews, edge, analytics" },
 ];
 
 const capabilities = [
+  "WebRTC & P2P (signaling, SFU, data channels)",
+  "Cryptography (X3DH, Double Ratchet, E2E encryption)",
+  "WASM (Rust compiled to browser)",
   "Vision AI (YOLOS, MobileCLIP, GPT-4o-mini)",
-  "Billing y subscriptions (Stripe)",
-  "Facturacion electronica (CFDI 4.0)",
-  "Observabilidad (Sentry, rate limiting, CSRF)",
+  "Search engines (BM25, PageRank, inverted index)",
+  "Billing & subscriptions (Stripe)",
+  "Electronic invoicing (CFDI 4.0)",
   "Testing (Vitest, 717+ integration tests)",
-  "Infra (Cloudflare DNS, Vercel, external crons)",
 ];
 
 export function Architecture() {
@@ -37,11 +39,11 @@ export function Architecture() {
           </span>
         </div>
         <h2 className="mb-6 max-w-lg text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-          Con que construyo
+          What I build with
         </h2>
         <p className="mb-20 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
-          Full-stack: frontend, backend, desktop, mobile, AI, infra, y billing.
-          Todo lo que necesita un producto real para funcionar en produccion.
+          Systems programming, full-stack web, desktop, mobile, cryptography, and
+          search engines. From Rust and Go to Next.js and React Native.
         </p>
 
         {/* Tech stack grid */}
@@ -63,7 +65,7 @@ export function Architecture() {
 
         {/* Capabilities list */}
         <p className="mb-6 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-          Tambien trabajo con
+          I also work with
         </p>
         <div className="grid gap-3 md:grid-cols-2">
           {capabilities.map((cap) => (

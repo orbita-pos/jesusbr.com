@@ -52,7 +52,7 @@ export function SpiderSearch() {
   // ── Check API health ──
 
   useEffect(() => {
-    fetch(`/api/spider/stats`, { signal: AbortSignal.timeout(5000) })
+    fetch(`/api/spider/stats`, { signal: AbortSignal.timeout(15000) })
       .then((r) => {
         if (!r.ok) throw new Error();
         return r.json();

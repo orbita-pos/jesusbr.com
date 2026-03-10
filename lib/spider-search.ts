@@ -1,5 +1,24 @@
 import { turso } from "./turso";
 
+// ── Simple in-memory cache (avoid repeated Turso round-trips) ──
+const cache = new Map<string, { data: unknown; ts: number }>();
+const CACHE_TTL = 60_000; // 1 minute
+
+function getCached<T>(key: string): T | null {
+  const entry = cache.get(key);
+  if (entry && Date.now() - entry.ts < CACHE_TTL) return entry.data as T;
+  return null;
+}
+
+function setCache(key: string, data: unknown) {
+  cache.set(key, { data, ts: Date.now() });
+  // Prevent unbounded growth
+  if (cache.size > 200) {
+    const oldest = cache.keys().next().value;
+    if (oldest) cache.delete(oldest);
+  }
+}
+
 // ── Featured projects (same as featured.json in Go engine) ──
 const FEATURED = [
   {
@@ -154,6 +173,10 @@ function extractSnippet(body: string, queryTokens: string[]): string {
 }
 
 export async function search(query: string, page: number = 1) {
+  const cacheKey = `search:${query.toLowerCase().trim()}:${page}`;
+  const cached = getCached<ReturnType<typeof search>>(cacheKey);
+  if (cached) return cached;
+
   const start = performance.now();
   const queryTokens = tokenize(query);
   if (queryTokens.length === 0) {
@@ -168,23 +191,20 @@ export async function search(query: string, page: number = 1) {
     };
   }
 
-  // Get total document count and avg doc length
-  const statsRow = await turso.execute(
-    "SELECT COUNT(*) as cnt, AVG(LENGTH(body)) as avg_len FROM pages"
-  );
-  const N = Number(statsRow.rows[0].cnt);
-  const avgDl = Number(statsRow.rows[0].avg_len) || 1;
-
-  // Find term IDs and doc frequencies
+  // Run stats + term lookup in parallel
   const placeholders = queryTokens.map(() => "?").join(",");
-  const termRows = await turso.execute({
-    sql: `SELECT t.id, t.term, COUNT(p.page_id) as df
-          FROM terms t
-          JOIN postings p ON p.term_id = t.id
-          WHERE t.term IN (${placeholders})
-          GROUP BY t.id`,
-    args: queryTokens,
-  });
+  const [statsRow, termRows] = await Promise.all([
+    turso.execute("SELECT COUNT(*) as cnt FROM pages"),
+    turso.execute({
+      sql: `SELECT t.id, t.term, COUNT(p.page_id) as df
+            FROM terms t
+            JOIN postings p ON p.term_id = t.id
+            WHERE t.term IN (${placeholders})
+            GROUP BY t.id`,
+      args: queryTokens,
+    }),
+  ]);
+  const N = Number(statsRow.rows[0].cnt);
 
   const termMap = new Map<string, { id: number; df: number }>();
   for (const row of termRows.rows) {
@@ -202,25 +222,20 @@ export async function search(query: string, page: number = 1) {
     for (const missing of missingTokens) {
       // Find closest term by edit distance
       const candidates = await turso.execute({
-        sql: `SELECT t.term, COUNT(p.page_id) as df
-              FROM terms t
-              JOIN postings p ON p.term_id = t.id
-              WHERE LENGTH(t.term) BETWEEN ? AND ?
-              GROUP BY t.id
-              ORDER BY df DESC
-              LIMIT 200`,
-        args: [missing.length - 2, missing.length + 2],
+        sql: `SELECT term FROM terms
+              WHERE term >= ? AND term < ?
+              AND LENGTH(term) BETWEEN ? AND ?
+              LIMIT 100`,
+        args: [missing[0], missing[0] + "\uffff", missing.length - 1, missing.length + 1],
       });
 
       let bestTerm = missing;
       let bestDist = 3;
-      let bestDf = 0;
       for (const c of candidates.rows) {
         const d = editDistance(missing, c.term as string);
-        if (d < bestDist || (d === bestDist && Number(c.df) > bestDf)) {
+        if (d < bestDist) {
           bestDist = d;
           bestTerm = c.term as string;
-          bestDf = Number(c.df);
         }
       }
       corrections.push(bestTerm);
@@ -267,39 +282,23 @@ export async function search(query: string, page: number = 1) {
     };
   }
 
+  // Step 1: Get BM25 scores from postings only (lightweight — no body/description)
   const tidPlaceholders = termIds.map(() => "?").join(",");
   const postingRows = await turso.execute({
-    sql: `SELECT po.term_id, po.page_id, po.frequency,
-                 pg.url, pg.title, pg.description, pg.body, pg.page_rank, pg.fetched_at,
-                 LENGTH(pg.body) as doc_len
+    sql: `SELECT po.term_id, po.page_id, po.frequency
           FROM postings po
-          JOIN pages pg ON pg.id = po.page_id
           WHERE po.term_id IN (${tidPlaceholders})`,
     args: termIds,
   });
 
-  // Score documents
-  const docScores = new Map<
-    number,
-    {
-      score: number;
-      url: string;
-      title: string;
-      description: string;
-      body: string;
-      page_rank: number;
-      fetched_at: string;
-      doc_len: number;
-    }
-  >();
+  // Score documents by BM25
+  const docBm25 = new Map<number, number>();
 
   for (const row of postingRows.rows) {
     const pageId = Number(row.page_id);
     const termId = Number(row.term_id);
     const tf = Number(row.frequency);
-    const docLen = Number(row.doc_len) || 1;
 
-    // Find which term this is
     let df = 1;
     for (const [, v] of termMap) {
       if (v.id === termId) {
@@ -308,29 +307,50 @@ export async function search(query: string, page: number = 1) {
       }
     }
 
-    // BM25 score for this term-doc pair
     const idfVal = idf(df, N);
-    const tfNorm = (tf * (K1 + 1)) / (tf + K1 * (1 - B + B * (docLen / avgDl)));
+    // Simplified BM25 without doc length (we don't have it yet)
+    const tfNorm = (tf * (K1 + 1)) / (tf + K1);
     const bm25 = idfVal * tfNorm;
 
-    const existing = docScores.get(pageId);
-    if (existing) {
-      existing.score += bm25;
-    } else {
-      docScores.set(pageId, {
-        score: bm25,
-        url: row.url as string,
-        title: row.title as string,
-        description: row.description as string,
-        body: row.body as string,
-        page_rank: Number(row.page_rank),
-        fetched_at: row.fetched_at as string,
-        doc_len,
-      });
-    }
+    docBm25.set(pageId, (docBm25.get(pageId) || 0) + bm25);
   }
 
-  // Combined scoring
+  // Step 2: Sort by BM25, take top candidates (more than a page to allow for re-ranking)
+  const topN = PER_PAGE * 3;
+  const sortedPageIds = [...docBm25.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, topN);
+
+  const total = docBm25.size;
+
+  if (sortedPageIds.length === 0) {
+    return {
+      query,
+      corrected,
+      results: [],
+      featured: matchFeatured(queryTokens),
+      total: 0,
+      time_ms: performance.now() - start,
+      page,
+      per_page: PER_PAGE,
+    };
+  }
+
+  // Step 3: Fetch page details only for top candidates
+  const pageIds = sortedPageIds.map(([id]) => id);
+  const pidPlaceholders = pageIds.map(() => "?").join(",");
+  const pageRows = await turso.execute({
+    sql: `SELECT id, url, title, description, body, page_rank, fetched_at
+          FROM pages WHERE id IN (${pidPlaceholders})`,
+    args: pageIds,
+  });
+
+  const pageMap = new Map<number, typeof pageRows.rows[0]>();
+  for (const row of pageRows.rows) {
+    pageMap.set(Number(row.id), row);
+  }
+
+  // Step 4: Combined scoring with page details
   const scored: {
     url: string;
     title: string;
@@ -344,45 +364,44 @@ export async function search(query: string, page: number = 1) {
   const queryLower = query.toLowerCase();
   const allTokens = corrected ? tokenize(corrected) : queryTokens;
 
-  for (const [, doc] of docScores) {
-    // Title match bonus
-    const titleMatch = doc.title.toLowerCase().includes(queryLower) ? 1.0 : 0.0;
+  for (const [pageId, bm25Score] of sortedPageIds) {
+    const pg = pageMap.get(pageId);
+    if (!pg) continue;
 
-    // Freshness
+    const titleMatch = (pg.title as string || "").toLowerCase().includes(queryLower) ? 1.0 : 0.0;
+
     let freshness = 0.5;
-    if (doc.fetched_at) {
-      const days =
-        (Date.now() - new Date(doc.fetched_at).getTime()) / 86400000;
+    if (pg.fetched_at) {
+      const days = (Date.now() - new Date(pg.fetched_at as string).getTime()) / 86400000;
       freshness = Math.exp(-days / 30);
     }
 
     const combined =
-      W_BM25 * doc.score +
-      W_PAGERANK * doc.page_rank +
+      W_BM25 * bm25Score +
+      W_PAGERANK * Number(pg.page_rank) +
       W_FRESHNESS * freshness +
       W_TITLE * titleMatch;
 
     const snippet =
-      doc.description || extractSnippet(doc.body, allTokens);
+      (pg.description as string) || extractSnippet(pg.body as string || "", allTokens);
 
     scored.push({
-      url: doc.url,
-      title: doc.title || doc.url,
+      url: pg.url as string,
+      title: (pg.title as string) || (pg.url as string),
       snippet: snippet.slice(0, 160),
       score: Math.round(combined * 1000) / 1000,
-      page_rank: Math.round(doc.page_rank * 1000) / 1000,
+      page_rank: Math.round(Number(pg.page_rank) * 1000) / 1000,
       featured: false,
-      fetched_at: doc.fetched_at || "",
+      fetched_at: (pg.fetched_at as string) || "",
     });
   }
 
   scored.sort((a, b) => b.score - a.score);
 
-  const total = scored.length;
   const offset = (page - 1) * PER_PAGE;
   const paged = scored.slice(offset, offset + PER_PAGE);
 
-  return {
+  const result = {
     query,
     corrected,
     featured: matchFeatured(queryTokens),
@@ -392,6 +411,9 @@ export async function search(query: string, page: number = 1) {
     page,
     per_page: PER_PAGE,
   };
+
+  setCache(cacheKey, result);
+  return result;
 }
 
 export async function suggest(prefix: string): Promise<string[]> {
@@ -413,6 +435,9 @@ export async function suggest(prefix: string): Promise<string[]> {
 }
 
 export async function getStats() {
+  const cached = getCached<ReturnType<typeof getStats>>("stats");
+  if (cached) return cached;
+
   const [pagesRow, termsRow, rankRow, crawlRow] = await Promise.all([
     turso.execute("SELECT COUNT(*) as cnt FROM pages"),
     turso.execute("SELECT COUNT(*) as cnt FROM terms"),
@@ -422,11 +447,14 @@ export async function getStats() {
     ),
   ]);
 
-  return {
+  const result = {
     pages_indexed: Number(pagesRow.rows[0].cnt),
     terms: Number(termsRow.rows[0].cnt),
     avg_page_rank:
       Math.round(Number(rankRow.rows[0].avg || 0) * 1000) / 1000,
     last_crawl: (crawlRow.rows[0]?.fetched_at as string) || "",
   };
+
+  setCache("stats", result);
+  return result;
 }

@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const links = [
-  { label: "Proyectos", href: "#proyectos" },
+  { label: "Projects", href: "#projects" },
   { label: "Stack", href: "#stack" },
-  { label: "Contacto", href: "#contacto" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export function Nav() {
