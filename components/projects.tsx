@@ -246,6 +246,54 @@ export function Projects() {
           </div>
         </div>
 
+        {/* ── Tier 2: Vertex ── */}
+        <div className="mt-6 border border-border">
+          <div className="flex flex-col md:flex-row">
+            {/* Left: info */}
+            <div className="flex-1 p-8 md:w-2/3">
+              <div className="flex items-center gap-3">
+                <h3 className="text-xl font-bold text-foreground">Vertex</h3>
+                <span className="inline-block border border-yellow-500/30 bg-yellow-500/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-yellow-400">
+                  In Development
+                </span>
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Plataforma de videollamadas empresarial. SFU (Selective Forwarding
+                Unit) construido desde cero en Rust, simulcast con calidad adaptativa,
+                screen sharing, chat, waiting room, grabacion, y admin dashboard.
+                Competencia directa de Zoom y Teams.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {["Rust", "WebRTC", "SFU", "Tokio", "Next.js", "Simulcast"].map((tech) => (
+                  <span
+                    key={tech}
+                    className="border border-border/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+            {/* Right: stats */}
+            <div className="mt-6 flex flex-wrap gap-6 md:mt-0 md:flex-col md:justify-center md:gap-4 md:border-l md:border-border md:p-8">
+              {[
+                { value: "50", label: "max participants" },
+                { value: "3", label: "simulcast layers" },
+                { value: "<150ms", label: "audio latency" },
+              ].map((stat) => (
+                <div key={stat.label} className="flex flex-col">
+                  <span className="font-mono text-lg font-bold text-primary">
+                    {stat.value}
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* ── Tier 3: Herramientas ── */}
         <div className="mt-6">
           <div className="border border-border/60 p-6">
