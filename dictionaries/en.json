@@ -25,7 +25,7 @@
     "hobbyNote": "Projects marked as hobby run on free-tier hosting (Hugging Face Spaces, Turso free tier) — they may take a few seconds to load.",
     "mainProduct": "Main product",
     "orbitaDescription": "Point-of-sale system for small businesses in Mexico. AI vision for camera-based product recognition, real offline mode, electronic invoicing (CFDI), self-service kiosk, mobile app, and multi-location support. Built entirely solo.",
-    "learnMore": "Learn more",
+    "learnMore": "Explore Orbita POS",
     "viewSource": "View Source",
     "search": "Search",
     "openApp": "Open app",
@@ -48,7 +48,11 @@
     "spiderDescription": "Search engine built from scratch. Concurrent crawler, inverted index, BM25 + PageRank, spell correction, autocomplete. No Elasticsearch, no external APIs — everything from scratch in Go.",
     "vertexDescription": "Enterprise video conferencing platform. Custom SFU (Selective Forwarding Unit) built from scratch in Rust, adaptive simulcast, screen sharing, chat, waiting room, recording, and admin dashboard. Direct competitor to Zoom and Teams.",
     "stackpediaDescription": "Platform where developers share the real tech stack behind their production projects. Honest verdicts, real costs, no sponsored content. Anonymous by default with recovery codes. Rust backend with PostgreSQL.",
-    "cfdiDescription": "Open source CLI and web app to parse, validate, and convert Mexican electronic invoices (CFDI 4.0) to JSON and CSV."
+    "cfdiDescription": "Open source CLI and web app to parse, validate, and convert Mexican electronic invoices (CFDI 4.0) to JSON and CSV.",
+    "kovaDescription": "Premium headphones ecommerce landing page. 3D product viewer with Three.js, scroll-driven animations, model comparison page, and multi-step preorder checkout. Apple-inspired design.",
+    "liveDemo": "Live demo",
+    "threeDSections": "3D sections",
+    "pages": "pages"
   },
   "architecture": {
     "sectionLabel": "Stack",

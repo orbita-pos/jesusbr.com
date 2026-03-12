@@ -25,7 +25,7 @@
     "hobbyNote": "Los proyectos marcados como hobby corren en hosting gratuito (Hugging Face Spaces, Turso free tier) — pueden tardar unos segundos en cargar.",
     "mainProduct": "Producto principal",
     "orbitaDescription": "Sistema de punto de venta para tienditas y PyMEs en México. Visión AI para reconocimiento de productos por cámara, modo offline real, facturación electrónica (CFDI), kiosco de autoservicio, app móvil y soporte multi-sucursal. Construido completamente solo.",
-    "learnMore": "Ver más",
+    "learnMore": "Explorar Orbita POS",
     "viewSource": "Ver código",
     "search": "Buscar",
     "openApp": "Abrir app",
@@ -48,7 +48,11 @@
     "spiderDescription": "Motor de búsqueda construido desde cero. Crawler concurrente, índice invertido, BM25 + PageRank, corrección ortográfica, autocompletado. Sin Elasticsearch, sin APIs externas — todo desde cero en Go.",
     "vertexDescription": "Plataforma de videoconferencia empresarial. SFU (Selective Forwarding Unit) personalizado construido desde cero en Rust, simulcast adaptativo, compartir pantalla, chat, sala de espera, grabación y panel de administración. Competidor directo de Zoom y Teams.",
     "stackpediaDescription": "Plataforma donde desarrolladores comparten el stack tecnológico real detrás de sus proyectos en producción. Veredictos honestos, costos reales, sin contenido patrocinado. Anónimo por defecto con códigos de recuperación. Backend en Rust con PostgreSQL.",
-    "cfdiDescription": "CLI y web app open source para parsear, validar y convertir facturas electrónicas mexicanas (CFDI 4.0) a JSON y CSV."
+    "cfdiDescription": "CLI y web app open source para parsear, validar y convertir facturas electrónicas mexicanas (CFDI 4.0) a JSON y CSV.",
+    "kovaDescription": "Landing page ecommerce de audífonos premium. Visor 3D de producto con Three.js, animaciones por scroll, página de comparación de modelos y checkout multi-paso. Diseño inspirado en Apple.",
+    "liveDemo": "Demo en vivo",
+    "threeDSections": "secciones 3D",
+    "pages": "páginas"
   },
   "architecture": {
     "sectionLabel": "Stack",

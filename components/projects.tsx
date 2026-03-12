@@ -380,8 +380,56 @@ export function Projects() {
           </div>
         </div>
 
-        {/* ── Tier 3: cfdi-cli ── */}
-        <div className="mt-6">
+        {/* ── Tier 3: KOVA & cfdi-cli ── */}
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
+          <div className="border border-border/60 p-6">
+            <div className="flex items-center gap-3">
+              <h3 className="text-base font-bold text-foreground">KOVA</h3>
+              <span className="inline-block border border-green-500/30 bg-green-500/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-green-400">
+                Live
+              </span>
+              <span className="inline-block border border-border/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/50">
+                Hobby
+              </span>
+            </div>
+            <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
+              {dict.projects.kovaDescription}
+            </p>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {["Next.js", "Three.js", "GSAP", "Tailwind", "GLB 3D"].map((tech) => (
+                <span
+                  key={tech}
+                  className="border border-border/40 px-2 py-0.5 font-mono text-[9px] uppercase tracking-widest text-muted-foreground/50"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <a
+                href="https://ecommerce-six-phi-30.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 bg-primary px-3.5 py-1.5 text-xs font-medium text-primary-foreground transition-all hover:opacity-90"
+              >
+                {dict.projects.liveDemo}
+                <svg className="h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+              <a
+                href="https://github.com/orbita-pos/kova-ecommerce"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border border-border px-3.5 py-1.5 text-xs font-medium text-foreground transition-all hover:border-primary hover:text-primary"
+              >
+                GitHub
+                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                </svg>
+              </a>
+            </div>
+          </div>
           <div className="border border-border/60 p-6">
             <div className="flex items-center gap-3">
               <h3 className="text-base font-bold text-foreground">cfdi-cli</h3>
