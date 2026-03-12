@@ -4,7 +4,30 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Industrial dark palette */
+  /* Light palette */
+  --background: oklch(0.98 0.002 250);
+  --foreground: oklch(0.15 0.01 250);
+  --card: oklch(0.96 0.002 250);
+  --card-foreground: oklch(0.15 0.01 250);
+  --popover: oklch(0.96 0.002 250);
+  --popover-foreground: oklch(0.15 0.01 250);
+  --primary: oklch(0.55 0.15 165);
+  --primary-foreground: oklch(0.98 0.002 250);
+  --secondary: oklch(0.93 0.003 250);
+  --secondary-foreground: oklch(0.20 0.01 250);
+  --muted: oklch(0.94 0.003 250);
+  --muted-foreground: oklch(0.45 0.01 250);
+  --accent: oklch(0.55 0.15 165);
+  --accent-foreground: oklch(0.98 0.002 250);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.88 0.003 250);
+  --input: oklch(0.88 0.003 250);
+  --ring: oklch(0.55 0.15 165);
+  --radius: 0.375rem;
+}
+
+.dark {
   --background: oklch(0.13 0.005 250);
   --foreground: oklch(0.92 0.01 250);
   --card: oklch(0.16 0.005 250);
@@ -24,7 +47,6 @@
   --border: oklch(0.25 0.005 250);
   --input: oklch(0.25 0.005 250);
   --ring: oklch(0.78 0.12 165);
-  --radius: 0.375rem;
 }
 
 @theme inline {
@@ -70,8 +92,20 @@
   color: oklch(0.98 0 0);
 }
 
+.dark ::selection {
+  background: oklch(0.78 0.12 165 / 0.3);
+  color: oklch(0.98 0 0);
+}
+
 /* Subtle grid background pattern */
 .grid-pattern {
+  background-image:
+    linear-gradient(oklch(0.85 0.003 250 / 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.85 0.003 250 / 0.5) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.dark .grid-pattern {
   background-image:
     linear-gradient(oklch(0.25 0.005 250 / 0.5) 1px, transparent 1px),
     linear-gradient(90deg, oklch(0.25 0.005 250 / 0.5) 1px, transparent 1px);

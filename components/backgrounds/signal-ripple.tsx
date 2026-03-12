@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
+import { useTheme } from "next-themes";
 
 interface Ripple {
   x: number;
@@ -17,6 +18,7 @@ export function SignalRippleBackground() {
   const mouseRef = useRef({ x: -1, y: -1 });
   const ripplesRef = useRef<Ripple[]>([]);
   const lastRippleTime = useRef(0);
+  const { resolvedTheme } = useTheme();
 
   const setup = useCallback(() => {
     const canvas = canvasRef.current;
@@ -106,13 +108,16 @@ export function SignalRippleBackground() {
         lastRippleTime.current = now;
       }
 
+      const dark = document.documentElement.classList.contains("dark");
+      const c = dark ? "94, 234, 180" : "16, 120, 90";
+
       // Draw static radial grid from center
       const centerX = w / 2;
       const centerY = h / 2;
       for (let r = 50; r < Math.max(w, h); r += 80) {
         ctx.beginPath();
         ctx.arc(centerX, centerY, r, 0, Math.PI * 2);
-        ctx.strokeStyle = "rgba(94, 234, 180, 0.015)";
+        ctx.strokeStyle = `rgba(${c}, 0.015)`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }
@@ -129,24 +134,22 @@ export function SignalRippleBackground() {
           continue;
         }
 
-        // Draw concentric rings
         for (let ring = 0; ring < 3; ring++) {
           const ringRadius = rp.radius - ring * 12;
           if (ringRadius <= 0) continue;
 
           ctx.beginPath();
           ctx.arc(rp.x, rp.y, ringRadius, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(94, 234, 180, ${rp.opacity * (1 - ring * 0.3)})`;
+          ctx.strokeStyle = `rgba(${c}, ${rp.opacity * (1 - ring * 0.3)})`;
           ctx.lineWidth = 0.8 - ring * 0.2;
           ctx.stroke();
         }
       }
 
-      // Draw subtle cursor glow if mouse is in section
       if (mx > 0 && my > 0) {
         const grad = ctx.createRadialGradient(mx, my, 0, mx, my, 80);
-        grad.addColorStop(0, "rgba(94, 234, 180, 0.04)");
-        grad.addColorStop(1, "rgba(94, 234, 180, 0)");
+        grad.addColorStop(0, `rgba(${c}, 0.04)`);
+        grad.addColorStop(1, `rgba(${c}, 0)`);
         ctx.fillStyle = grad;
         ctx.fillRect(mx - 80, my - 80, 160, 160);
       }
@@ -162,7 +165,7 @@ export function SignalRippleBackground() {
       section?.removeEventListener("mousemove", handleMouseMove);
       clearInterval(ambientTimer);
     };
-  }, [setup]);
+  }, [setup, resolvedTheme]);
 
   return (
     <canvas

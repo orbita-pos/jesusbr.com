@@ -1,36 +1,39 @@
 "use client";
 
 import { SignalRippleBackground } from "@/components/backgrounds/signal-ripple";
-
-const links = [
-  {
-    label: "Orbita POS",
-    href: "https://orbitapos.com",
-    description: "Production product",
-  },
-  {
-    label: "GitHub",
-    href: "https://github.com/orbita-pos",
-    description: "Code and contributions",
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/jesus-bernal-2b1a1b228",
-    description: "Professional profile",
-  },
-  {
-    label: "X / Twitter",
-    href: "https://x.com/OrbitaPOS",
-    description: "Build in public updates",
-  },
-  {
-    label: "info@jesusbr.com",
-    href: "mailto:info@jesusbr.com",
-    description: "Hiring, collaboration, or freelance",
-  },
-];
+import { useDictionary } from "@/lib/dictionary-provider";
 
 export function Contact() {
+  const dict = useDictionary();
+
+  const links = [
+    {
+      label: "Orbita POS",
+      href: "https://orbitapos.com",
+      description: dict.contact.orbitaLabel,
+    },
+    {
+      label: "GitHub",
+      href: "https://github.com/orbita-pos",
+      description: dict.contact.githubLabel,
+    },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/jesus-bernal-2b1a1b228",
+      description: dict.contact.linkedinLabel,
+    },
+    {
+      label: "X / Twitter",
+      href: "https://x.com/OrbitaPOS",
+      description: dict.contact.twitterLabel,
+    },
+    {
+      label: "info@jesusbr.com",
+      href: "mailto:info@jesusbr.com",
+      description: dict.contact.emailLabel,
+    },
+  ];
+
   return (
     <section
       id="contact"
@@ -44,15 +47,14 @@ export function Contact() {
             <div className="mb-4 flex items-center gap-3">
               <div className="h-px w-8 bg-primary" />
               <span className="font-mono text-xs uppercase tracking-widest text-primary">
-                Contact
+                {dict.contact.sectionLabel}
               </span>
             </div>
             <h2 className="text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-              Let's talk
+              {dict.contact.title}
             </h2>
             <p className="mt-4 text-pretty text-lg leading-relaxed text-muted-foreground">
-              If you're hiring, want to collaborate on a project,
-              or just want to talk about technology — reach out.
+              {dict.contact.description}
             </p>
           </div>
 

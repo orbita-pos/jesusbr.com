@@ -1,10 +1,16 @@
+"use client";
+
+import { useDictionary } from "@/lib/dictionary-provider";
+
 export function StructuredData() {
+  const dict = useDictionary();
+
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: "Jesus Bernal",
     url: "https://jesusbr.com",
-    jobTitle: "Fundador",
+    jobTitle: dict.meta.jobTitle,
     worksFor: {
       "@type": "Organization",
       name: "Orbita POS",
@@ -34,8 +40,7 @@ export function StructuredData() {
     url: "https://orbitapos.com",
     applicationCategory: "BusinessApplication",
     operatingSystem: "Web, Windows, macOS, iOS, Android",
-    description:
-      "Sistema de punto de venta con vision AI, modo offline y facturacion electronica para tienditas y PyMEs en Mexico.",
+    description: dict.meta.softwareDescription,
     author: {
       "@type": "Person",
       name: "Jesus Bernal",
@@ -91,11 +96,11 @@ export function StructuredData() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema).replace(/</g, '\\u003c') }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema).replace(/</g, '\\u003c') }}
       />
     </>
   );

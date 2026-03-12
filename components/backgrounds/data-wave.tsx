@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
+import { useTheme } from "next-themes";
 
 interface DataPulse {
   x: number;
@@ -14,6 +15,7 @@ export function DataWaveBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
   const visibleRef = useRef(true);
+  const { resolvedTheme } = useTheme();
 
   const setup = useCallback(() => {
     const canvas = canvasRef.current;
@@ -65,6 +67,7 @@ export function DataWaveBackground() {
     }));
 
     let time = 0;
+    const isDark = () => document.documentElement.classList.contains("dark");
 
     function animate() {
       if (!visibleRef.current) {
@@ -80,6 +83,8 @@ export function DataWaveBackground() {
       const { ctx, w, h } = result;
       ctx.clearRect(0, 0, w, h);
       time += 1;
+
+      const c = isDark() ? "94, 234, 180" : "16, 120, 90";
 
       // Draw waves
       for (let wi = 0; wi < waveCount; wi++) {
@@ -99,7 +104,7 @@ export function DataWaveBackground() {
             ctx.lineTo(x, y);
           }
         }
-        ctx.strokeStyle = `rgba(94, 234, 180, ${wc.opacity})`;
+        ctx.strokeStyle = `rgba(${c}, ${wc.opacity})`;
         ctx.lineWidth = 0.8;
         ctx.stroke();
       }
@@ -122,15 +127,15 @@ export function DataWaveBackground() {
 
         // Glow around pulse
         const grad = ctx.createRadialGradient(px, py, 0, px, py, pulse.size * 8);
-        grad.addColorStop(0, `rgba(94, 234, 180, ${pulse.opacity * 0.4})`);
-        grad.addColorStop(1, "rgba(94, 234, 180, 0)");
+        grad.addColorStop(0, `rgba(${c}, ${pulse.opacity * 0.4})`);
+        grad.addColorStop(1, `rgba(${c}, 0)`);
         ctx.fillStyle = grad;
         ctx.fillRect(px - pulse.size * 8, py - pulse.size * 8, pulse.size * 16, pulse.size * 16);
 
         // Core
         ctx.beginPath();
         ctx.arc(px, py, pulse.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(94, 234, 180, ${pulse.opacity})`;
+        ctx.fillStyle = `rgba(${c}, ${pulse.opacity})`;
         ctx.fill();
       }
 
@@ -143,7 +148,7 @@ export function DataWaveBackground() {
       cancelAnimationFrame(animRef.current);
       observer.disconnect();
     };
-  }, [setup]);
+  }, [setup, resolvedTheme]);
 
   return (
     <canvas

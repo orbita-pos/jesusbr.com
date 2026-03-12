@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
+import { useTheme } from "next-themes";
 
 interface Line {
   y: number;
@@ -20,6 +21,7 @@ export function TransactionFlowBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
   const visibleRef = useRef(true);
+  const { resolvedTheme } = useTheme();
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -70,6 +72,7 @@ export function TransactionFlowBackground() {
     }));
 
     let time = 0;
+    const isDark = () => document.documentElement.classList.contains("dark");
 
     function animate() {
       if (!visibleRef.current) {
@@ -87,18 +90,19 @@ export function TransactionFlowBackground() {
       ctx.clearRect(0, 0, w, h);
       time += 1;
 
+      const dark = isDark();
+      const c = dark ? "94, 234, 180" : "16, 120, 90";
+
       for (const line of lines) {
         const yPos = (line.y / 100) * h;
 
-        // Draw the horizontal line
         ctx.beginPath();
         ctx.moveTo(0, yPos);
         ctx.lineTo(w, yPos);
-        ctx.strokeStyle = `rgba(94, 234, 180, ${line.opacity})`;
+        ctx.strokeStyle = `rgba(${c}, ${line.opacity})`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
 
-        // Draw pulses traveling along the line
         for (const pulse of line.pulses) {
           pulse.x += pulse.speed;
           if (pulse.x > 110) {
@@ -108,26 +112,23 @@ export function TransactionFlowBackground() {
 
           const px = (pulse.x / 100) * w;
 
-          // Glow
           const grad = ctx.createRadialGradient(px, yPos, 0, px, yPos, pulse.size * 8);
-          grad.addColorStop(0, `rgba(94, 234, 180, ${pulse.opacity * 0.5})`);
-          grad.addColorStop(1, "rgba(94, 234, 180, 0)");
+          grad.addColorStop(0, `rgba(${c}, ${pulse.opacity * 0.5})`);
+          grad.addColorStop(1, `rgba(${c}, 0)`);
           ctx.fillStyle = grad;
           ctx.fillRect(px - pulse.size * 8, yPos - pulse.size * 8, pulse.size * 16, pulse.size * 16);
 
-          // Core dot
           ctx.beginPath();
           ctx.arc(px, yPos, pulse.size, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(94, 234, 180, ${pulse.opacity})`;
+          ctx.fillStyle = `rgba(${c}, ${pulse.opacity})`;
           ctx.fill();
 
-          // Trail
           ctx.beginPath();
           ctx.moveTo(px, yPos);
           ctx.lineTo(px - 30, yPos);
           const trailGrad = ctx.createLinearGradient(px - 30, yPos, px, yPos);
-          trailGrad.addColorStop(0, "rgba(94, 234, 180, 0)");
-          trailGrad.addColorStop(1, `rgba(94, 234, 180, ${pulse.opacity * 0.3})`);
+          trailGrad.addColorStop(0, `rgba(${c}, 0)`);
+          trailGrad.addColorStop(1, `rgba(${c}, ${pulse.opacity * 0.3})`);
           ctx.strokeStyle = trailGrad;
           ctx.lineWidth = pulse.size * 0.8;
           ctx.stroke();
@@ -143,7 +144,7 @@ export function TransactionFlowBackground() {
       cancelAnimationFrame(animRef.current);
       observer.disconnect();
     };
-  }, [draw]);
+  }, [draw, resolvedTheme]);
 
   return (
     <canvas

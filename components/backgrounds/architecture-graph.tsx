@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
+import { useTheme } from "next-themes";
 
 interface ArchNode {
   x: number;
@@ -25,6 +26,7 @@ export function ArchitectureGraphBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
   const visibleRef = useRef(true);
+  const { resolvedTheme } = useTheme();
 
   const setup = useCallback(() => {
     const canvas = canvasRef.current;
@@ -100,6 +102,7 @@ export function ArchitectureGraphBackground() {
     }));
 
     let time = 0;
+    const isDark = () => document.documentElement.classList.contains("dark");
 
     function animate() {
       if (!visibleRef.current) {
@@ -116,6 +119,9 @@ export function ArchitectureGraphBackground() {
       ctx.clearRect(0, 0, w, h);
       time += 0.01;
 
+      const dark = isDark();
+      const c = dark ? "94, 234, 180" : "16, 120, 90";
+
       // Draw edges
       for (const [fi, ti] of edges) {
         const from = nodes[fi];
@@ -128,7 +134,7 @@ export function ArchitectureGraphBackground() {
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
-        ctx.strokeStyle = "rgba(94, 234, 180, 0.04)";
+        ctx.strokeStyle = `rgba(${c}, 0.04)`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
       }
@@ -141,7 +147,6 @@ export function ArchitectureGraphBackground() {
             sig.active = true;
             sig.progress = 0;
             sig.opacity = 0.4 + Math.random() * 0.3;
-            // Randomly reverse direction
             if (Math.random() > 0.5) {
               const tmp = sig.fromIndex;
               sig.fromIndex = sig.toIndex;
@@ -170,17 +175,15 @@ export function ArchitectureGraphBackground() {
         const sy = y1 + (y2 - y1) * sig.progress;
         const fadeOpacity = sig.opacity * Math.sin(sig.progress * Math.PI);
 
-        // Signal glow
         const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, 15);
-        grad.addColorStop(0, `rgba(94, 234, 180, ${fadeOpacity * 0.5})`);
-        grad.addColorStop(1, "rgba(94, 234, 180, 0)");
+        grad.addColorStop(0, `rgba(${c}, ${fadeOpacity * 0.5})`);
+        grad.addColorStop(1, `rgba(${c}, 0)`);
         ctx.fillStyle = grad;
         ctx.fillRect(sx - 15, sy - 15, 30, 30);
 
-        // Signal dot
         ctx.beginPath();
         ctx.arc(sx, sy, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(94, 234, 180, ${fadeOpacity})`;
+        ctx.fillStyle = `rgba(${c}, ${fadeOpacity})`;
         ctx.fill();
       }
 
@@ -191,22 +194,19 @@ export function ArchitectureGraphBackground() {
         const pulse = Math.sin(time * 1.5 + node.pulsePhase) * 0.5 + 0.5;
         const op = node.opacity * (0.7 + pulse * 0.3);
 
-        // Outer glow ring
         ctx.beginPath();
         ctx.arc(nx, ny, node.radius * 3, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(94, 234, 180, ${op * 0.2})`;
+        ctx.strokeStyle = `rgba(${c}, ${op * 0.2})`;
         ctx.lineWidth = 0.5;
         ctx.stroke();
 
-        // Core
         ctx.beginPath();
         ctx.arc(nx, ny, node.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(94, 234, 180, ${op})`;
+        ctx.fillStyle = `rgba(${c}, ${op})`;
         ctx.fill();
 
-        // Label
         ctx.font = "8px monospace";
-        ctx.fillStyle = `rgba(94, 234, 180, ${op * 0.5})`;
+        ctx.fillStyle = `rgba(${c}, ${op * 0.5})`;
         ctx.textAlign = "center";
         ctx.fillText(node.label, nx, ny + node.radius * 3 + 10);
       }
@@ -220,7 +220,7 @@ export function ArchitectureGraphBackground() {
       cancelAnimationFrame(animRef.current);
       observer.disconnect();
     };
-  }, [setup]);
+  }, [setup, resolvedTheme]);
 
   return (
     <canvas

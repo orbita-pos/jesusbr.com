@@ -2,8 +2,13 @@
 
 import { motion } from "framer-motion";
 import { TransactionFlowBackground } from "@/components/backgrounds/transaction-flow";
+import { useDictionary } from "@/lib/dictionary-provider";
+import { useLocale } from "@/lib/locale-provider";
 
 export function Hero() {
+  const dict = useDictionary();
+  const locale = useLocale();
+
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden">
       <div className="grid-pattern absolute inset-0 opacity-40" />
@@ -27,11 +32,9 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="mt-6 text-pretty text-lg leading-relaxed text-muted-foreground md:text-xl"
           >
-            Software engineer. I build with Rust, Go, and TypeScript
-            — from cryptography and search engines to full-stack apps.
-            My main product is{" "}
+            {dict.hero.subtitle}{" "}
             <a
-              href="/orbita"
+              href={`/${locale}/orbita`}
               className="text-primary underline decoration-primary/30 underline-offset-4 transition-colors hover:decoration-primary"
             >
               Orbita POS
@@ -50,15 +53,15 @@ export function Hero() {
               download
               className="inline-flex items-center gap-2 border border-primary bg-primary px-4 py-2 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:opacity-90"
             >
-              Download CV
+              {dict.hero.downloadCv}
               <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 18h16" />
               </svg>
             </a>
             {[
-              { label: "GitHub", href: "https://github.com/orbita-pos" },
-              { label: "LinkedIn", href: "https://www.linkedin.com/in/jesus-bernal-2b1a1b228" },
-              { label: "X / Twitter", href: "https://x.com/OrbitaPOS" },
+              { label: dict.hero.github, href: "https://github.com/orbita-pos" },
+              { label: dict.hero.linkedin, href: "https://www.linkedin.com/in/jesus-bernal-2b1a1b228" },
+              { label: dict.hero.twitter, href: "https://x.com/OrbitaPOS" },
               { label: "info@jesusbr.com", href: "mailto:info@jesusbr.com" },
             ].map((link) => (
               <a

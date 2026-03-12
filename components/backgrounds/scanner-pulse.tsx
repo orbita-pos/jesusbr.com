@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
+import { useTheme } from "next-themes";
 
 interface ScanBeam {
   x: number;
@@ -24,6 +25,7 @@ export function ScannerPulseBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
   const visibleRef = useRef(true);
+  const { resolvedTheme } = useTheme();
 
   const setup = useCallback(() => {
     const canvas = canvasRef.current;
@@ -74,6 +76,8 @@ export function ScannerPulseBackground() {
     const gridCols = 12;
     const gridRows = 6;
 
+    const isDark = () => document.documentElement.classList.contains("dark");
+
     function animate() {
       if (!visibleRef.current) {
         animRef.current = requestAnimationFrame(animate);
@@ -89,7 +93,9 @@ export function ScannerPulseBackground() {
       ctx.clearRect(0, 0, w, h);
       frameCount++;
 
-      // Draw subtle product grid (small rectangles representing products)
+      const dark = isDark();
+      const clr = dark ? "94, 234, 180" : "16, 120, 90";
+
       const cellW = w / gridCols;
       const cellH = h / gridRows;
       for (let r = 0; r < gridRows; r++) {
@@ -98,7 +104,7 @@ export function ScannerPulseBackground() {
           const cy = r * cellH + cellH / 2;
           const pw = cellW * 0.3;
           const ph = cellH * 0.2;
-          ctx.fillStyle = "rgba(94, 234, 180, 0.015)";
+          ctx.fillStyle = `rgba(${clr}, 0.015)`;
           ctx.fillRect(cx - pw / 2, cy - ph / 2, pw, ph);
         }
       }
@@ -146,15 +152,15 @@ export function ScannerPulseBackground() {
           ctx.beginPath();
           ctx.moveTo(bx, by - bh / 2);
           ctx.lineTo(bx, by + bh / 2);
-          ctx.strokeStyle = `rgba(94, 234, 180, ${beam.opacity})`;
+          ctx.strokeStyle = `rgba(${clr}, ${beam.opacity})`;
           ctx.lineWidth = 1.5;
           ctx.stroke();
 
           // Glow
           const grad = ctx.createLinearGradient(bx - 30, by, bx + 30, by);
-          grad.addColorStop(0, "rgba(94, 234, 180, 0)");
-          grad.addColorStop(0.5, `rgba(94, 234, 180, ${beam.opacity * 0.4})`);
-          grad.addColorStop(1, "rgba(94, 234, 180, 0)");
+          grad.addColorStop(0, `rgba(${clr}, 0)`);
+          grad.addColorStop(0.5, `rgba(${clr}, ${beam.opacity * 0.4})`);
+          grad.addColorStop(1, `rgba(${clr}, 0)`);
           ctx.fillStyle = grad;
           ctx.fillRect(bx - 30, by - bh / 2, 60, bh);
         }
@@ -173,7 +179,7 @@ export function ScannerPulseBackground() {
 
         ctx.beginPath();
         ctx.arc(rp.x, rp.y, rp.radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(94, 234, 180, ${rp.opacity})`;
+        ctx.strokeStyle = `rgba(${clr}, ${rp.opacity})`;
         ctx.lineWidth = 1;
         ctx.stroke();
       }
@@ -187,7 +193,7 @@ export function ScannerPulseBackground() {
       cancelAnimationFrame(animRef.current);
       observer.disconnect();
     };
-  }, [setup]);
+  }, [setup, resolvedTheme]);
 
   return (
     <canvas

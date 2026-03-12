@@ -1,30 +1,33 @@
 "use client";
 
 import { ArchitectureGraphBackground } from "@/components/backgrounds/architecture-graph";
-
-const stack = [
-  { name: "Rust", role: "Systems", detail: "WASM, crypto, SFU, CLI tools" },
-  { name: "Go", role: "Backend", detail: "Crawlers, search engines" },
-  { name: "TypeScript", role: "Full-stack", detail: "Next.js, React, Node" },
-  { name: "Next.js", role: "Framework", detail: "App Router, RSC, API routes" },
-  { name: "PostgreSQL", role: "Database", detail: "Transactions, migrations" },
-  { name: "SQLite", role: "Embedded DB", detail: "Turso Cloud, local-first" },
-  { name: "Electron", role: "Desktop", detail: "Offline, hardware access" },
-  { name: "Expo", role: "Mobile", detail: "React Native, offline queue" },
-];
-
-const capabilities = [
-  "WebRTC & P2P (signaling, SFU, data channels)",
-  "Cryptography (X3DH, Double Ratchet, E2E encryption)",
-  "WASM (Rust compiled to browser)",
-  "Vision AI (YOLOS, MobileCLIP, GPT-4o-mini)",
-  "Search engines (BM25, PageRank, inverted index)",
-  "Billing & subscriptions (Stripe)",
-  "Electronic invoicing (CFDI 4.0)",
-  "Testing (Vitest, 717+ integration tests)",
-];
+import { useDictionary } from "@/lib/dictionary-provider";
 
 export function Architecture() {
+  const dict = useDictionary();
+
+  const stack = [
+    { name: "Rust", role: dict.architecture.systems, detail: dict.architecture.rustDetail },
+    { name: "Go", role: dict.architecture.backend, detail: dict.architecture.goDetail },
+    { name: "TypeScript", role: dict.architecture.fullStack, detail: dict.architecture.tsDetail },
+    { name: "Next.js", role: dict.architecture.framework, detail: dict.architecture.nextDetail },
+    { name: "PostgreSQL", role: dict.architecture.database, detail: dict.architecture.pgDetail },
+    { name: "SQLite", role: dict.architecture.embeddedDb, detail: dict.architecture.sqliteDetail },
+    { name: "Electron", role: dict.architecture.desktop, detail: dict.architecture.electronDetail },
+    { name: "Expo", role: dict.architecture.mobile, detail: dict.architecture.expoDetail },
+  ];
+
+  const capabilities = [
+    "WebRTC & P2P (signaling, SFU, data channels)",
+    "Cryptography (X3DH, Double Ratchet, E2E encryption)",
+    "WASM (Rust compiled to browser)",
+    "Vision AI (YOLOS, MobileCLIP, GPT-4o-mini)",
+    "Search engines (BM25, PageRank, inverted index)",
+    "Billing & subscriptions (Stripe)",
+    "Electronic invoicing (CFDI 4.0)",
+    "Testing (Vitest, 717+ integration tests)",
+  ];
+
   return (
     <section
       id="stack"
@@ -35,15 +38,14 @@ export function Architecture() {
         <div className="mb-4 flex items-center gap-3">
           <div className="h-px w-8 bg-primary" />
           <span className="font-mono text-xs uppercase tracking-widest text-primary">
-            Stack
+            {dict.architecture.sectionLabel}
           </span>
         </div>
         <h2 className="mb-6 max-w-lg text-balance text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-          What I build with
+          {dict.architecture.title}
         </h2>
         <p className="mb-20 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
-          Systems programming, full-stack web, desktop, mobile, cryptography, and
-          search engines. From Rust and Go to Next.js and React Native.
+          {dict.architecture.description}
         </p>
 
         {/* Tech stack grid */}
@@ -65,7 +67,7 @@ export function Architecture() {
 
         {/* Capabilities list */}
         <p className="mb-6 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-          I also work with
+          {dict.architecture.alsoWorkWith}
         </p>
         <div className="grid gap-3 md:grid-cols-2">
           {capabilities.map((cap) => (
