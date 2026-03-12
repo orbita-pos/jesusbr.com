@@ -162,7 +162,7 @@ export function Projects() {
               </div>
               <div className="mt-5 flex flex-wrap items-center gap-3">
                 <a
-                  href="https://github.com/jesusbr/shadow"
+                  href="https://github.com/orbita-pos/jesusbr-shadow"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 bg-primary px-4 py-2 text-xs font-medium text-primary-foreground transition-all hover:opacity-90"
@@ -287,7 +287,7 @@ export function Projects() {
               </div>
               <div className="mt-5">
                 <a
-                  href="https://github.com/jesusbr/vertex"
+                  href="https://github.com/orbita-pos/vertex"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 bg-primary px-4 py-2 text-xs font-medium text-primary-foreground transition-all hover:opacity-90"
@@ -305,6 +305,80 @@ export function Projects() {
                 { value: "50", label: "max participants" },
                 { value: "3", label: "simulcast layers" },
                 { value: "<150ms", label: "audio latency" },
+              ].map((stat) => (
+                <div key={stat.label} className="flex flex-col">
+                  <span className="font-mono text-lg font-bold text-primary">
+                    {stat.value}
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Tier 2: Stackpedia ── */}
+        <div className="mt-6 border border-border">
+          <div className="flex flex-col md:flex-row">
+            {/* Left: info */}
+            <div className="flex-1 p-8 md:w-2/3">
+              <div className="flex items-center gap-3">
+                <h3 className="text-xl font-bold text-foreground">Stackpedia</h3>
+                <span className="inline-block border border-green-500/30 bg-green-500/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-green-400">
+                  Live
+                </span>
+                <span className="inline-block border border-border/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/50">
+                  Hobby
+                </span>
+              </div>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Platform where developers share the real tech stack behind their production
+                projects. Honest verdicts, real costs, no sponsored content. Anonymous
+                by default with recovery codes. Rust backend with PostgreSQL.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {["Rust", "Axum", "PostgreSQL", "Next.js", "TypeScript", "Tailwind"].map((tech) => (
+                  <span
+                    key={tech}
+                    className="border border-border/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/60"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <a
+                  href="https://stackpedia.jesusbr.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 bg-primary px-4 py-2 text-xs font-medium text-primary-foreground transition-all hover:opacity-90"
+                >
+                  Open app
+                  <svg className="h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+                <a
+                  href="https://github.com/orbita-pos/stackpedia"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 border border-border px-4 py-2 text-xs font-medium text-foreground transition-all hover:border-primary hover:text-primary"
+                >
+                  GitHub
+                  <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+            {/* Right: stats */}
+            <div className="mt-6 flex flex-wrap gap-6 md:mt-0 md:flex-col md:justify-center md:gap-4 md:border-l md:border-border md:p-8">
+              {[
+                { value: "15+", label: "API endpoints" },
+                { value: "Rust", label: "backend" },
+                { value: "Anon", label: "auth system" },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col">
                   <span className="font-mono text-lg font-bold text-primary">
