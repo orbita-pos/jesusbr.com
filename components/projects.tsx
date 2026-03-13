@@ -407,7 +407,7 @@ export function Projects() {
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-3">
               <a
-                href="https://ecommerce-six-phi-30.vercel.app"
+                href="https://kova.jesusbr.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 bg-primary px-3.5 py-1.5 text-xs font-medium text-primary-foreground transition-all hover:opacity-90"
