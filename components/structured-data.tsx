@@ -19,7 +19,7 @@ export function StructuredData() {
     sameAs: [
       "https://github.com/orbita-pos",
       "https://www.linkedin.com/in/jesus-bernal-2b1a1b228",
-      "https://x.com/OrbitaPOS",
+      "https://x.com/JesusBrDev",
     ],
     knowsAbout: [
       "Next.js",

@@ -24,7 +24,7 @@ export function Contact() {
     },
     {
       label: "X / Twitter",
-      href: "https://x.com/OrbitaPOS",
+      href: "https://x.com/JesusBrDev",
       description: dict.contact.twitterLabel,
     },
     {
@@ -111,7 +111,7 @@ export function Contact() {
             {[
               { label: "GitHub", href: "https://github.com/orbita-pos" },
               { label: "LinkedIn", href: "https://www.linkedin.com/in/jesus-bernal-2b1a1b228" },
-              { label: "X", href: "https://x.com/OrbitaPOS" },
+              { label: "X", href: "https://x.com/JesusBrDev" },
             ].map((link) => (
               <a
                 key={link.label}

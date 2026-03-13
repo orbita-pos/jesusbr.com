@@ -61,7 +61,7 @@ export function Hero() {
             {[
               { label: dict.hero.github, href: "https://github.com/orbita-pos" },
               { label: dict.hero.linkedin, href: "https://www.linkedin.com/in/jesus-bernal-2b1a1b228" },
-              { label: dict.hero.twitter, href: "https://x.com/OrbitaPOS" },
+              { label: dict.hero.twitter, href: "https://x.com/JesusBrDev" },
               { label: "info@jesusbr.com", href: "mailto:info@jesusbr.com" },
             ].map((link) => (
               <a
