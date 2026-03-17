@@ -385,8 +385,8 @@ export function Projects() {
           <div className="border border-border/60 p-6">
             <div className="flex items-center gap-3">
               <h3 className="text-base font-bold text-foreground">KOVA</h3>
-              <span className="inline-block border border-green-500/30 bg-green-500/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-green-400">
-                Live
+              <span className="inline-block border border-blue-500/30 bg-blue-500/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-blue-400">
+                Open Source
               </span>
               <span className="inline-block border border-border/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-muted-foreground/50">
                 Hobby
@@ -406,17 +406,6 @@ export function Projects() {
               ))}
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-3">
-              <a
-                href="https://kova.jesusbr.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 bg-primary px-3.5 py-1.5 text-xs font-medium text-primary-foreground transition-all hover:opacity-90"
-              >
-                {dict.projects.liveDemo}
-                <svg className="h-3 w-3 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
               <a
                 href="https://github.com/orbita-pos/kova-ecommerce"
                 target="_blank"
