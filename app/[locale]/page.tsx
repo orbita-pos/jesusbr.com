@@ -8,8 +8,8 @@ import { StructuredData } from "@/components/structured-data";
 export default function Page() {
   return (
     <>
-       <StructuredData  >
-      <main>
+      <StructuredData />
+   
         <Nav />
         <Hero />
         <Projects />
