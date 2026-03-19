@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Metadata } from "next";
 import { Nav } from "@/components/nav";
 import { SpiderSearch } from "@/components/spider-search";
