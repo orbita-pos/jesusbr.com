@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <>
       <StructuredData />
-   
+      <main>
         <Nav />
         <Hero />
         <Projects />
