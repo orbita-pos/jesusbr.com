@@ -8,9 +8,9 @@ import { StructuredData } from "@/components/structured-data";
 export default function Page() {
   return (
     <>
-      <StructuredData >
+      <StructuredData />
       <main>
-        <Nav >
+        <Nav />
         <Hero />
         <Projects />
         <Architecture />
