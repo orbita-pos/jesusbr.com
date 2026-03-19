@@ -10,7 +10,7 @@ export default function Page() {
     <>
       <StructuredData >
       <main>
-        <Nav />
+        <Nav >
         <Hero />
         <Projects />
         <Architecture />
