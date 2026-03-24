@@ -144,6 +144,13 @@ export function Projects() {
           </div>
           <div className="p-8 pt-10 md:p-12 md:pt-12">
             <div className="flex items-center gap-4">
+              <img
+                src="/logo-inari/web-app-manifest-192x192.png"
+                alt="InariWatch logo"
+                width={48}
+                height={48}
+                className="rounded-lg"
+              />
               <h3 className="text-2xl font-bold text-foreground md:text-3xl">
                 InariWatch
               </h3>
