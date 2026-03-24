@@ -50,6 +50,12 @@
     "stackpediaDescription": "Plataforma donde desarrolladores comparten el stack tecnológico real detrás de sus proyectos en producción. Veredictos honestos, costos reales, sin contenido patrocinado. Anónimo por defecto con códigos de recuperación. Backend en Rust con PostgreSQL.",
     "cfdiDescription": "CLI y web app open source para parsear, validar y convertir facturas electrónicas mexicanas (CFDI 4.0) a JSON y CSV.",
     "kovaDescription": "Landing page ecommerce de audífonos premium. Visor 3D de producto con Three.js, animaciones por scroll, página de comparación de modelos y checkout multi-paso. Diseño inspirado en Apple.",
+    "inariDescription": "Plataforma DevOps con IA que diagnostica y corrige incidentes de producción automáticamente. Lee fallos de CI, genera fixes, los valida y abre PRs sin intervención humana. 5 compuertas de seguridad para auto-merge, monitoreo de regresiones post-merge y servidor MCP para Claude Code, Cursor y Windsurf.",
+    "inariProduct": "Plataforma IA",
+    "integrations": "integraciones",
+    "safetyGates": "compuertas de seguridad",
+    "fixRetries": "reintentos máx.",
+    "exploreInari": "Explorar InariWatch",
     "liveDemo": "Demo en vivo",
     "threeDSections": "secciones 3D",
     "pages": "páginas"
