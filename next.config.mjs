@@ -1,3 +1,4 @@
+import { withInariWatch } from "@inariwatch/capture/next";
 import { withSentryConfig } from '@sentry/nextjs';
 
 /** @type {import('next').NextConfig} */
@@ -10,7 +11,7 @@ const nextConfig = {
   },
 }
 
-export default withSentryConfig(nextConfig, {
+export default withInariWatch(withSentryConfig)(nextConfig, {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
